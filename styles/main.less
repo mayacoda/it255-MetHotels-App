@@ -1,0 +1,43 @@
+@import "_bootstrap";
+
+// variables
+
+@brand-primary: #c5143e;
+@navbar-inverse-brand-color: #fff;
+
+@navbar-border-radius: 0;
+@body-bg: #ddd;
+
+.hotel-images {
+  display: none;
+
+  .image {
+    background-size: cover;
+    background-position: center;
+    margin: 0 auto 10px auto;
+    display: block;
+    height: 300px;
+    width: 700px;
+  }
+}
+
+@media screen and (max-width: @screen-md-max) {
+  .hotel-images .image {
+    width: 440px;
+    height: 250px;
+  }
+}
+
+@media screen and (max-width: @screen-sm-max) {
+  .hotel-images .image {
+    width: 325px;
+    height: 250px;
+  }
+}
+
+@media screen and (max-width: @screen-xs-max) {
+  .hotel-images .image {
+    width: 100%;
+    height: 150px;
+  }
+}
