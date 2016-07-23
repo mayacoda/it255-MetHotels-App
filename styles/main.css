@@ -6724,9 +6724,6 @@ button.close {
     display: none !important;
   }
 }
-.hotel-images {
-  display: none;
-}
 .hotel-images .image {
   background-size: cover;
   background-position: center;

@@ -6,22 +6,31 @@ include("../functions.php");
 session_start();
 getHeader();
 
-$invalidLogin         = false;
-$incorrectCredentials = false;
+if (isset($_SERVER['HTTP_ORIGIN'])) {
+    header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+    header('Access-Control-Allow-Credentials: true');
+    header('Access-Control-Max-Age: 86400');    // cache for 1 day
+}
 
-if (isset($_POST['login'])) {
-    $email    = $connection->real_escape_string( $_POST['email'] );
-    $password = $_POST['password'];
+$postdata = file_get_contents("php://input");
+$data = json_decode($postdata);
+
+if ($data->login) {
+    $email    = $connection->real_escape_string( $data->email );
+    $password = $data->password;
 
     if (!empty($email) && !empty($password)) {
         if (loginUser( $email, $password )) {
             $_SESSION['email'] = $email;
+            http_response_code(200);
         } else {
-            $incorrectCredentials = true;
+            http_response_code(401);
         }
     } else {
-        $invalidLogin = true;
+        http_response_code(400);
     }
+} else {
+    http_response_code(500);
 }
 
 if (isset($_SESSION['email'])) { ?>
@@ -29,39 +38,6 @@ if (isset($_SESSION['email'])) { ?>
 <?php } else {
 
     ?>
-
-    <div class="container">
-        <div class="panel col-lg-4 col-sm-6 col-xs-12">
-            <div class="panel-body">
-                <?php if ($invalidLogin) { ?>
-                    <div class="alert alert-danger">
-                        Please fill in all the fields correctly
-                    </div>
-                <?php } ?>
-
-                <?php if ($incorrectCredentials) { ?>
-                    <div class="alert alert-danger">
-                        Incorrect credentials
-                    </div>
-                <?php } ?>
-
-                <form action="login.php" method="post">
-                    <div class="form-group">
-                        <label for="username">Email Address:</label>
-                        <input id="username" name="email" placeholder="Email Address" class="form-control" type="email">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password:</label>
-                        <input id="password" name="password" placeholder="Password" class="form-control"
-                               type="password">
-                    </div>
-
-                    <button class="btn btn-block btn-primary" type="submit" name="login">Log in</button>
-                </form>
-
-            </div>
-        </div>
-    </div>
 
 <?php }
 

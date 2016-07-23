@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="panel col-lg-4 col-sm-6 col-xs-12">
+        <div class="panel-body">
+            <div class="alert alert-danger" *ngIf="invalidLogin">
+                Please fill in all the fields correctly
+            </div>
+
+            <div class="alert alert-danger" *ngIf="incorrectCredentials">
+                Incorrect credentials
+            </div>
+
+            <div class="alert alert-info" *ngIf="loginSuccess">
+                Login successful. You will be redirected shortly.
+            </div>
+
+            <form (submit)="onLogin(loginForm)" [formGroup]="loginForm">
+                <div class="form-group">
+                    <label for="username">Email Address:</label>
+                    <input id="username"
+                           name="email"
+                           placeholder="Email Address"
+                           class="form-control"
+                           [formControl]="loginForm.controls.email"
+                           type="email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input id="password"
+                           name="password"
+                           placeholder="Password"
+                           class="form-control"
+                           [formControl]="loginForm.controls.password"
+                           type="password">
+                </div>
+
+                <button class="btn btn-block btn-primary" type="submit" name="login">Log in</button>
+            </form>
+
+        </div>
+    </div>
+</div>

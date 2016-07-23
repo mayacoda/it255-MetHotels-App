@@ -1,0 +1,61 @@
+<div class="container">
+    <div class="panel col-lg-4 col-sm-6 col-xs-12">
+        <div class="panel-body">
+            <div class="alert alert-danger" *ngIf="invalidRegistration">
+                Please fill in all the fields correctly
+            </div>
+
+            <div class="alert alert-danger" *ngIf="userExists">
+                A user with the email you specified already exists
+            </div>
+
+            <div class="alert alert-info" *ngIf="registrationSuccess">
+                Successfully registered. You will be redirected to the login page in a moment.
+            </div>
+            <form (submit)="onRegisterUser(registerForm)" [formGroup]="registerForm">
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input id="first_name"
+                           name="firstname"
+                           placeholder="First Name"
+                           class="form-control"
+                           [formControl]="registerForm.controls.firstName"
+                           type="text">
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    <input id="last_name"
+                           name="lastname"
+                           placeholder="Last Name"
+                           class="form-control"
+                           type="text"
+                           [formControl]="registerForm.controls.lastName">
+                </div>
+                <div class="form-group">
+                    <label for="username">Email Address:</label>
+                    <input id="username"
+                           name="email"
+                           placeholder="Email Address"
+                           class="form-control"
+                           type="email"
+                           [formControl]="registerForm.controls.email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input id="password"
+                           name="password"
+                           placeholder="Password"
+                           class="form-control"
+                           type="password"
+                           [formControl]="registerForm.controls.password">
+                </div>
+
+                <button class="btn btn-block btn-primary"
+                        name="register"
+                        (disable)="!registerForm.valid"
+                        type="submit">Register</button>
+            </form>
+
+        </div>
+    </div>
+</div>

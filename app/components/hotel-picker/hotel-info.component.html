@@ -1,0 +1,22 @@
+<div class="hotel-images">
+    <div class="image" [style.background-image]="'url(' + hotel.image + ')'"></div>
+
+    <p><em>Location:</em> {{hotel.location}}</p>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Room type</th>
+            <th>Price</th>
+            <th>People</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let room of hotel.rooms">
+            <td>{{room.type}}</td>
+            <td>{{room.price}}</td>
+            <td>{{room.people}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

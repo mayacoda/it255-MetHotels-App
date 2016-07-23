@@ -1,0 +1,71 @@
+<div class="panel">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-8 col-sm-6 col-xs-12 pull-right">
+                <hotel-info [hotel]="selectedHotel"></hotel-info>
+            </div>
+
+            <div class="col-lg-4 col-sm-6 col-xs-12 pull-left">
+                <form #hotelForm="ngForm">
+                    <div class="form-group">
+                        <label for="first_name" class="control-label">
+                            First Name:
+                        </label>
+                        <input type="text"
+                               [(ngModel)]="model.firstName"
+                               name="firstName"
+                               class="form-control"
+                               placeholder="First Name"
+                               id="first_name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="last_name" class="control-label">Last Name:</label>
+                        <input type="text" [(ngModel)]="model.lastName"
+                               name="lastName" class="form-control" placeholder="First Name"
+                               id="last_name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hotel_select" class="control-label">Hotel:</label>
+                        <select class="form-control" required
+                                (ngModelChange)="onHotelSelected($event)"
+                                [(ngModel)]="model.hotel"
+                                id="hotel_select"
+                                class="form-control"
+                                name="hotel"
+                                #hotel="ngModel">
+                            <option *ngFor="let hotel of hotels" [value]="hotel.location">{{hotel.location}}</option>
+                        </select>
+                    </div>
+
+                    <div class="row" id="date">
+                        <div class="col-sm-6 form-group">
+                            <label for="from_date">From:</label>
+                            <input id="from_date"
+                                   type="text"
+                                   [(ngModel)]="model.from"
+                                   name="from"
+                                   class="form-control date-input">
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label for="to_date">To:</label>
+                            <input id="to_date" type="text"
+                                   [(ngModel)]="model.to" name="to"
+                                   class="form-control date-input">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="people" class="control-label">Number of People</label>
+                        <input type="number" class="form-control" id="people" min="1" name="people"
+                               [(ngModel)]="model.people">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Book My Room</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
