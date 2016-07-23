@@ -1,26 +1,25 @@
-import {Component} from "@angular/core";
-import {FORM_DIRECTIVES, REACTIVE_FORM_DIRECTIVES, FormBuilder, Validators, FormGroup} from "@angular/forms";
-import {Http, Headers, URLSearchParams} from "@angular/http";
-import {Router} from "@angular/router";
+import {Component} from "angular2/core";
+import {Http, Headers} from "angular2/http";
+import {Router} from "angular2/router";
+import {ControlGroup, Control, FORM_DIRECTIVES, Validators} from "angular2/common";
 
 @Component({
-    moduleId: module.id,
     selector: 'register-page',
-    templateUrl: 'register-page.component.html',
-    directives: [REACTIVE_FORM_DIRECTIVES, FORM_DIRECTIVES]
+    templateUrl: 'app/pages/register-page.component.html',
+    directives: [FORM_DIRECTIVES]
 })
 export class RegisterPageComponent {
-    registerForm: FormGroup;
-    invalidRegistration: boolean;
-    userExists: boolean;
-    registrationSuccess: boolean;
+    registerForm:ControlGroup;
+    invalidRegistration:boolean;
+    userExists:boolean;
+    registrationSuccess:boolean;
 
-    constructor(private formBuilder: FormBuilder, private http: Http, private router: Router) {
-        this.registerForm = formBuilder.group({
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
-            email: ['', Validators.required],
-            password: ['', [Validators.required]]
+    constructor(private http:Http, private router:Router) {
+        this.registerForm = new ControlGroup({
+            firstName: new Control('', Validators.required),
+            lastName: new Control('', Validators.required),
+            email: new Control('', Validators.required),
+            password: new Control('', Validators.required)
         });
 
         this.registerForm.valueChanges
@@ -29,24 +28,24 @@ export class RegisterPageComponent {
             });
     }
 
-    onRegisterUser(form: FormGroup) {
+    onRegisterUser(form:ControlGroup) {
         var headers = new Headers();
-        const value = Object.assign(form.value, {register: true});
+        const value = (<any> Object).assign(form.value, {register: true});
 
         this.http.post('http://it255.dev:8006/Hotels/pages/registration.php',
-            value,
+            JSON.stringify(value),
             {headers: headers}
         ).subscribe(res => {
-                this.registrationSuccess = true;
-                setTimeout(() => {
-                    this.router.navigate(['login']);
-                }, 4000);
-            }, err => {
-                if (err.status === 409) {
-                    this.userExists = true;
-                } else {
-                    this.invalidRegistration = true;
-                }
-            });
+            this.registrationSuccess = true;
+            setTimeout(() => {
+                this.router.navigate(['/Login']);
+            }, 4000);
+        }, err => {
+            if (err.status === 409) {
+                this.userExists = true;
+            } else {
+                this.invalidRegistration = true;
+            }
+        });
     }
 }

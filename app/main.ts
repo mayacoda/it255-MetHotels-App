@@ -1,12 +1,18 @@
-import {bootstrap} from "@angular/platform-browser-dynamic";
+/// <reference path="../node_modules/angular2/ts/typings/node/node.d.ts"/>
+/// <reference path="../node_modules/angular2/typings/browser.d.ts"/>
+
 import {AppComponent} from "./app.component";
-import {appRouterProviders} from "./app.router";
-import {HashLocationStrategy, LocationStrategy} from "@angular/common";
-import {provideForms, disableDeprecatedForms} from "@angular/forms";
+import {
+    APP_BASE_HREF,
+    ROUTER_PROVIDERS,
+    HashLocationStrategy,
+    LocationStrategy,
+} from "angular2/router";
+import {provide} from "angular2/core";
+import {bootstrap} from "angular2/bootstrap";
 
 bootstrap(AppComponent, [
-    appRouterProviders,
-    {provide: LocationStrategy, useClass: HashLocationStrategy},
-    disableDeprecatedForms(),
-    provideForms()
+    ROUTER_PROVIDERS,
+    provide(APP_BASE_HREF, {useValue: '/'}),
+    provide(LocationStrategy, {useClass: HashLocationStrategy})
 ]);

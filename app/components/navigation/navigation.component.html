@@ -7,13 +7,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/Hotels">MetHotels</a>
+            <a class="navbar-brand" [routerLink]="['/Home']">MetHotels</a>
         </div>
 
         <div class="navbar-collapse collapse" id="navbar_collapse">
 
-            <a [routerLink]="['login']" class="btn btn-default navbar-btn">Sign in</a>
-            <a [routerLink]="['register']" class="btn btn-primary navbar-btn">Register</a>
+            <a [routerLink]="['/Login']" class="btn btn-default navbar-btn">Sign in</a>
+            <a [routerLink]="['/Register']" class="btn btn-primary navbar-btn">Register</a>
 
             <form class="navbar-form navbar-right hidden-xs">
                 <div class="form-group">

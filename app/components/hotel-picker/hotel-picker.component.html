@@ -6,13 +6,13 @@
             </div>
 
             <div class="col-lg-4 col-sm-6 col-xs-12 pull-left">
-                <form #hotelForm="ngForm">
+                <form [ngFormModel]="hotelForm">
                     <div class="form-group">
                         <label for="first_name" class="control-label">
                             First Name:
                         </label>
                         <input type="text"
-                               [(ngModel)]="model.firstName"
+                               [ngFormControl]="hotelForm.controls.firstName"
                                name="firstName"
                                class="form-control"
                                placeholder="First Name"
@@ -21,8 +21,11 @@
 
                     <div class="form-group">
                         <label for="last_name" class="control-label">Last Name:</label>
-                        <input type="text" [(ngModel)]="model.lastName"
-                               name="lastName" class="form-control" placeholder="First Name"
+                        <input type="text"
+                               [ngFormControl]="hotelForm.controls.lastName"
+                               name="lastName"
+                               class="form-control"
+                               placeholder="Last Name"
                                id="last_name">
                     </div>
 
@@ -30,12 +33,9 @@
                         <label for="hotel_select" class="control-label">Hotel:</label>
                         <select class="form-control" required
                                 (ngModelChange)="onHotelSelected($event)"
-                                [(ngModel)]="model.hotel"
                                 id="hotel_select"
-                                class="form-control"
-                                name="hotel"
-                                #hotel="ngModel">
-                            <option *ngFor="let hotel of hotels" [value]="hotel.location">{{hotel.location}}</option>
+                                [ngFormControl]="hotelForm.controls.hotel">
+                            <option *ngFor="#hotel of hotels" [value]="hotel.location">{{hotel.location}}</option>
                         </select>
                     </div>
 
@@ -44,7 +44,7 @@
                             <label for="from_date">From:</label>
                             <input id="from_date"
                                    type="text"
-                                   [(ngModel)]="model.from"
+                                   [ngFormModel]="hotelForm.controls.from"
                                    name="from"
                                    class="form-control date-input">
                         </div>
@@ -52,15 +52,19 @@
                         <div class="col-sm-6 form-group">
                             <label for="to_date">To:</label>
                             <input id="to_date" type="text"
-                                   [(ngModel)]="model.to" name="to"
+                                   [ngFormModel]="hotelForm.controls.to"
+                                   name="to"
                                    class="form-control date-input">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="people" class="control-label">Number of People</label>
-                        <input type="number" class="form-control" id="people" min="1" name="people"
-                               [(ngModel)]="model.people">
+                        <input type="number"
+                               class="form-control"
+                               id="people" min="1"
+                               name="people"
+                               [ngFormModel]="hotelForm.controls.people">
                     </div>
 
                     <button type="submit" class="btn btn-primary">Book My Room</button>

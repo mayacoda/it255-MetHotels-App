@@ -1,26 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import {REACTIVE_FORM_DIRECTIVES, FORM_DIRECTIVES, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Http, Headers} from "@angular/http";
-import {Router} from "@angular/router";
+import {Component} from "angular2/core";
+import {Http, Headers} from "angular2/http";
+import {Router} from "angular2/router";
+import {ControlGroup, FORM_DIRECTIVES, Control, Validators} from "angular2/common";
 
 @Component({
-    moduleId: module.id,
     selector: 'login-page',
-    templateUrl: 'login-page.component.html',
-    directives: [REACTIVE_FORM_DIRECTIVES, FORM_DIRECTIVES]
+    templateUrl: 'app/pages/login-page.component.html',
+    directives: [FORM_DIRECTIVES]
 })
-export class LoginPageComponent implements OnInit {
-    loginForm: FormGroup;
+export class LoginPageComponent {
+    loginForm: ControlGroup;
     invalidCredentials: boolean;
     loginSuccess: boolean;
     invalidLogin: boolean;
 
-    constructor(private formBuilder: FormBuilder, private http: Http, private router: Router) {
-        this.loginForm = formBuilder.group({
-            email: ['', Validators.required],
-            password: ['', Validators.required]
+    constructor(private http: Http, private router: Router) {
+        this.loginForm = new ControlGroup({
+            email: new Control('', Validators.required),
+            password: new Control('', Validators.required)
         });
-
 
         this.loginForm.valueChanges
             .subscribe(_ => {
@@ -28,17 +26,17 @@ export class LoginPageComponent implements OnInit {
             });
     }
 
-    onLogin(form: FormGroup) {
-        var headers = new Headers();
-        const value = Object.assign(form.value, {login: true});
+    onLogin(form: ControlGroup) {
+        const headers = new Headers();
+        const value = (<any> Object).assign(form.value, {login: true});
 
         this.http.post('http://it255.dev:8006/Hotels/pages/login.php',
-            value,
+            JSON.stringify(value),
             {headers: headers}
         ).subscribe(res => {
             this.loginSuccess = true;
             setTimeout(() => {
-                this.router.navigate(['']);
+                this.router.navigate(['/Home']);
             }, 4000);
         }, err => {
             if (err.status === 401) {
@@ -48,7 +46,4 @@ export class LoginPageComponent implements OnInit {
             }
         });
     }
-
-    ngOnInit() { }
-
 }

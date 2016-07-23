@@ -1,10 +1,8 @@
 <?php
 
-include("../templates.php");
 include("../functions.php");
 
 session_start();
-getHeader();
 
 if (isset($_SERVER['HTTP_ORIGIN'])) {
     header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
@@ -34,7 +32,7 @@ if ($data->login) {
 }
 
 if (isset($_SESSION['email'])) { ?>
-    <div class="alert alert-info container">Logged in as with the email <?php echo $_SESSION['email'] ?></div>
+
 <?php } else {
 
     ?>

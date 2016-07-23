@@ -12,14 +12,14 @@
             <div class="alert alert-info" *ngIf="registrationSuccess">
                 Successfully registered. You will be redirected to the login page in a moment.
             </div>
-            <form (submit)="onRegisterUser(registerForm)" [formGroup]="registerForm">
+            <form (submit)="onRegisterUser(registerForm)" [ngFormModel]="registerForm">
                 <div class="form-group">
                     <label for="first_name">First Name:</label>
                     <input id="first_name"
                            name="firstname"
                            placeholder="First Name"
                            class="form-control"
-                           [formControl]="registerForm.controls.firstName"
+                           [ngFormControl]="registerForm.controls.firstName"
                            type="text">
                 </div>
                 <div class="form-group">
@@ -29,7 +29,7 @@
                            placeholder="Last Name"
                            class="form-control"
                            type="text"
-                           [formControl]="registerForm.controls.lastName">
+                           [ngFormControl]="registerForm.controls.lastName">
                 </div>
                 <div class="form-group">
                     <label for="username">Email Address:</label>
@@ -38,7 +38,7 @@
                            placeholder="Email Address"
                            class="form-control"
                            type="email"
-                           [formControl]="registerForm.controls.email">
+                           [ngFormControl]="registerForm.controls.email">
                 </div>
                 <div class="form-group">
                     <label for="password">Password:</label>
@@ -47,7 +47,7 @@
                            placeholder="Password"
                            class="form-control"
                            type="password"
-                           [formControl]="registerForm.controls.password">
+                           [ngFormControl]="registerForm.controls.password">
                 </div>
 
                 <button class="btn btn-block btn-primary"

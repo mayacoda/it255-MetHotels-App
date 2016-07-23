@@ -1,9 +1,8 @@
-import {Component} from "@angular/core";
+import {Component} from "angular2/core";
 
 @Component({
-    moduleId: module.id,
     selector: 'app-heading',
-    templateUrl: 'app-heading.component.html'
+    templateUrl: 'app/components/app-heading/app-heading.component.html'
 })
 export class AppHeadingComponent {
     constructor() { }

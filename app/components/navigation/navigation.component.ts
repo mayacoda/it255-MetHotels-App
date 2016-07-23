@@ -1,10 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {ROUTER_DIRECTIVES} from "@angular/router";
+import {Component, OnInit} from 'angular2/core';
+import {ROUTER_DIRECTIVES} from "angular2/router";
 
 @Component({
-    moduleId: module.id,
     selector: 'navigation',
-    templateUrl: 'navigation.component.html',
+    templateUrl: 'app/components/navigation/navigation.component.html',
     directives: [ROUTER_DIRECTIVES]
 })
 export class NavigationComponent implements OnInit {

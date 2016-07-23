@@ -12,7 +12,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let room of hotel.rooms">
+        <tr *ngFor="#room of hotel.rooms">
             <td>{{room.type}}</td>
             <td>{{room.price}}</td>
             <td>{{room.people}}</td>

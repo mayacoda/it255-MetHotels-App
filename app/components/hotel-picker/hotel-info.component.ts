@@ -1,10 +1,9 @@
-import {Component, OnInit, Input} from "@angular/core";
+import {Component, OnInit, Input} from "angular2/core";
 import {Hotel} from "../../models/hotel.model";
 
 @Component({
-    moduleId: module.id,
     selector: 'hotel-info',
-    templateUrl: 'hotel-info.component.html'
+    templateUrl: 'app/components/hotel-picker/hotel-info.component.html'
 })
 export class HotelInfoComponent implements OnInit {
     @Input() hotel: Hotel;
