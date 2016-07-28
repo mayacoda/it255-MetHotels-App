@@ -5,6 +5,7 @@ import {NavigationComponent} from "./components/navigation/navigation.component"
 import {HTTP_PROVIDERS} from "angular2/http";
 import {RegisterPageComponent} from "./pages/register-page.component";
 import {LoginPageComponent} from "./pages/login-page.component";
+import {SearchPageComponent} from "./pages/search-page.component";
 
 
 @Component({
@@ -21,6 +22,7 @@ import {LoginPageComponent} from "./pages/login-page.component";
     {path: '/', name: 'Home', component: HomePageComponent},
     {path: '/register', name: 'Register', component: RegisterPageComponent},
     {path: '/login', name: 'Login', component: LoginPageComponent},
+    {path: '/search', name: 'Search', component: SearchPageComponent}
 ])
 export class AppComponent {
     constructor() {

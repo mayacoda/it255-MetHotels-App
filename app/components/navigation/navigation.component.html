@@ -15,9 +15,16 @@
             <a [routerLink]="['/Login']" class="btn btn-default navbar-btn">Sign in</a>
             <a [routerLink]="['/Register']" class="btn btn-primary navbar-btn">Register</a>
 
-            <form class="navbar-form navbar-right hidden-xs">
+            <form class="navbar-form navbar-right hidden-xs"
+                  *ngIf="showSearch"
+                  #form="ngForm"
+                  (submit)="onSearch(query)">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
+                    <input type="text"
+                           class="form-control"
+                           [(ngModel)]="query"
+                           name="query"
+                           placeholder="Search">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

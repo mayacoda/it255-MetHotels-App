@@ -1,0 +1,68 @@
+[
+  {
+    "type": "single",
+    "area": 20,
+    "people": 1,
+    "price": 50
+  },
+  {
+    "type": "single",
+    "area": 20,
+    "people": 1,
+    "price": 50
+  },
+  {
+    "type": "double",
+    "area": 34,
+    "people": 2,
+    "price": 60
+  },
+  {
+    "type": "double",
+    "area": 34,
+    "people": 2,
+    "price": 80
+  },
+  {
+    "type": "double",
+    "area": 40,
+    "people": 2,
+    "price": 80
+  },
+  {
+    "type": "apartment",
+    "area": 80,
+    "people": 4,
+    "price": 400
+  },
+  {
+    "type": "apartment",
+    "area": 80,
+    "people": 4,
+    "price": 500
+  },
+  {
+    "type": "apartment",
+    "area": 80,
+    "people": 4,
+    "price": 700
+  },
+  {
+    "type": "apartment",
+    "area": 120,
+    "people": 4,
+    "price": 1000
+  },
+  {
+    "type": "single",
+    "area": 15,
+    "people": 1,
+    "price": 35
+  },
+  {
+    "type": "single",
+    "area": 25,
+    "people": 1,
+    "price": 55
+  }
+]

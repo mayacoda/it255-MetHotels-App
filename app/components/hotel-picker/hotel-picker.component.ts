@@ -29,8 +29,6 @@ export class HotelPickerComponent {
             people: new Control('', Validators.required)
         });
 
-        console.log(this.hotelForm);
-
         this.model.hotel = this.hotels[0].location;
         this.selectedHotel = this.hotels[0];
     }
@@ -45,17 +43,17 @@ const HOTELS:Hotel[] = [
             {
                 type: 'Single',
                 price: 300,
-                people: '1'
+                people: 1
             },
             {
                 type: 'Double',
                 price: 400,
-                people: '2'
+                people: 2
             },
             {
                 type: 'Apartment Suite',
                 price: 700,
-                people: '3+'
+                people: 3
             }
         ]
     },
@@ -66,17 +64,17 @@ const HOTELS:Hotel[] = [
             {
                 type: 'Single',
                 price: 300,
-                people: '1'
+                people: 1
             },
             {
                 type: 'Double',
                 price: 400,
-                people: '2'
+                people: 2
             },
             {
                 type: 'Apartment Suite',
                 price: 700,
-                people: '3+'
+                people: 3
             }
         ]
     },
@@ -87,17 +85,17 @@ const HOTELS:Hotel[] = [
             {
                 type: 'Single',
                 price: 300,
-                people: '1'
+                people: 1
             },
             {
                 type: 'Double',
                 price: 400,
-                people: '2'
+                people: 2
             },
             {
                 type: 'Apartment Suite',
                 price: 700,
-                people: '3+'
+                people: 3
             }
         ]
     },
@@ -108,17 +106,17 @@ const HOTELS:Hotel[] = [
             {
                 type: 'Single',
                 price: 300,
-                people: '1'
+                people: 1
             },
             {
                 type: 'Double',
                 price: 400,
-                people: '2'
+                people: 2
             },
             {
                 type: 'Apartment Suite',
                 price: 700,
-                people: '3+'
+                people: 3
             }
         ]
     }
