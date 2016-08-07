@@ -35,7 +35,9 @@
                                 (ngModelChange)="onHotelSelected($event)"
                                 id="hotel_select"
                                 [ngFormControl]="hotelForm.controls.hotel">
-                            <option *ngFor="#hotel of hotels" [value]="hotel.location">{{hotel.location}}</option>
+                            <option *ngFor="#hotel of hotels" [value]="hotel.id">
+                                {{hotel.name + ' (' + hotel.location + ')'}}
+                            </option>
                         </select>
                     </div>
 

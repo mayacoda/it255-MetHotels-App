@@ -1,4 +1,4 @@
-<div class="hotel-images">
+<div class="hotel-images" *ngIf="hotel">
     <div class="image" [style.background-image]="'url(' + hotel.image + ')'"></div>
 
     <p><em>Location:</em> {{hotel.location}}</p>

@@ -29,7 +29,7 @@ export class RegisterPageComponent {
     }
 
     onRegisterUser(form:ControlGroup) {
-        var headers = new Headers();
+        const headers = new Headers();
         const value = (<any> Object).assign(form.value, {register: true});
 
         this.http.post('http://it255.dev:8006/Hotels/pages/registration.php',

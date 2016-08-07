@@ -2,6 +2,7 @@ import {Component} from 'angular2/core';
 import {HotelInfoComponent} from "./hotel-info.component";
 import {Hotel} from "../../models/hotel.model";
 import {FORM_DIRECTIVES, ControlGroup, Control, Validators}    from 'angular2/common';
+import {Http} from "angular2/http";
 
 @Component({
     selector: 'hotel-picker',
@@ -9,115 +10,35 @@ import {FORM_DIRECTIVES, ControlGroup, Control, Validators}    from 'angular2/co
     directives: [HotelInfoComponent, FORM_DIRECTIVES]
 })
 export class HotelPickerComponent {
-    hotels:Hotel[] = HOTELS;
+    hotels: Hotel[];
     selectedHotel:Hotel;
     hotelForm:ControlGroup;
     model:any = {};
 
-    onHotelSelected(name:string) {
-        this.selectedHotel = this.hotels.filter(hotel => hotel.location === name)[0];
+    onHotelSelected(id: number) {
+        this.selectedHotel = this.hotels.filter(hotel => hotel.id === id)[0];
     }
 
-    constructor() {
-
+    constructor(private http: Http) {
         this.hotelForm = new ControlGroup({
             firstName: new Control('', Validators.required),
             lastName: new Control('', Validators.required),
-            hotel: new Control(this.hotels[0].location, Validators.required),
+            hotel: new Control('', Validators.required),
             from: new Control('', Validators.required),
             to: new Control('', Validators.required),
             people: new Control('', Validators.required)
         });
 
-        this.model.hotel = this.hotels[0].location;
-        this.selectedHotel = this.hotels[0];
+        http.get("http://it255.dev:8006/Hotels/pages/hotel-list-rooms.php")
+            .map(res => res.json())
+            .subscribe(res => {
+                this.hotels = res;
+
+                (<Control>this.hotelForm.controls["hotel"]).updateValue(this.hotels[0].id);
+                this.model.hotel = this.hotels[0].id;
+                this.selectedHotel = this.hotels[0];
+            });
+
+
     }
 }
-
-
-const HOTELS:Hotel[] = [
-    {
-        image: 'images/hotel1.jpg',
-        location: 'New York City',
-        rooms: [
-            {
-                type: 'Single',
-                price: 300,
-                people: 1
-            },
-            {
-                type: 'Double',
-                price: 400,
-                people: 2
-            },
-            {
-                type: 'Apartment Suite',
-                price: 700,
-                people: 3
-            }
-        ]
-    },
-    {
-        image: 'images/hotel2.jpg',
-        location: 'Belgrade, Serbia',
-        rooms: [
-            {
-                type: 'Single',
-                price: 300,
-                people: 1
-            },
-            {
-                type: 'Double',
-                price: 400,
-                people: 2
-            },
-            {
-                type: 'Apartment Suite',
-                price: 700,
-                people: 3
-            }
-        ]
-    },
-    {
-        image: 'images/hotel3.jpg',
-        location: 'Barcelona, Spain',
-        rooms: [
-            {
-                type: 'Single',
-                price: 300,
-                people: 1
-            },
-            {
-                type: 'Double',
-                price: 400,
-                people: 2
-            },
-            {
-                type: 'Apartment Suite',
-                price: 700,
-                people: 3
-            }
-        ]
-    },
-    {
-        image: 'images/hotel4.jpg',
-        location: 'Bangkok, Thailand',
-        rooms: [
-            {
-                type: 'Single',
-                price: 300,
-                people: 1
-            },
-            {
-                type: 'Double',
-                price: 400,
-                people: 2
-            },
-            {
-                type: 'Apartment Suite',
-                price: 700,
-                people: 3
-            }
-        ]
-    }
-];

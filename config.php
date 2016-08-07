@@ -11,7 +11,7 @@ if ($connection->connect_error) {
     die('Connection error: ' . $connection->connect_error);
 }
 
-$sql = "CREATE TABLE `guests` (
+$guestQuery = "CREATE TABLE IF NOT EXISTS `guests` (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
 `firstname` VARCHAR(150) NOT NULL, 
 `lastname` VARCHAR(150) NOT NULL, 
@@ -21,4 +21,28 @@ $sql = "CREATE TABLE `guests` (
 COLLATE='utf8_unicode_ci' 
 ENGINE=InnoDB";
 
-$connection->query( $sql ); // will return false if table already exists
+$connection->query( $guestQuery );
+
+$roomQuery = "CREATE TABLE IF NOT EXISTS `rooms` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`hotelId` INT NOT NULL,
+`type` VARCHAR(50) NOT NULL,
+`area` INT DEFAULT NULL,
+`people` INT NOT NULL,
+`price` INT NOT NULL
+)
+COLLATE='utf8_unicode_ci' 
+ENGINE=InnoDB";
+
+$connection->query( $roomQuery );
+
+$hotelQuery = "CREATE TABLE IF NOT EXISTS `hotels` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`location` VARCHAR(150) NOT NULL,
+`image` VARCHAR(500) NOT NULL,
+`name` VARCHAR(150) NOT NULL
+)
+COLLATE='utf8_unicode_ci' 
+ENGINE=InnoDB";
+
+$connection->query( $hotelQuery );

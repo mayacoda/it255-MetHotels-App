@@ -17,7 +17,9 @@ import {RoomSearchPipe} from "../pipes/search.pipe";
                     <input type="text" class="form-control" [(ngModel)]="query">
             </label>
             <p class="help-block">
-            Search starting with a $ will return rooms that are at or below that price level. Textual searches return results based on room type. Numerical searches return rooms with that number of people or more, or that amount of area or more.
+            Search starting with a $ will return rooms that are at or below that price level. Textual searches return 
+            results based on room type. Numerical searches return rooms with that number of people or more, or that 
+            amount of area or more.
             </p>
         </form>
     </div>
@@ -44,9 +46,7 @@ export class SearchPageComponent implements OnInit {
         this.query = this.routeParams.get('query');
 
         this.roomList = this.http.get('http://it255.dev:8006/Hotels/pages/room-list.php')
-            .map(res => {
-                return res.json();
-            });
+            .map(res => res.json());
     }
 
 }

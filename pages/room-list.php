@@ -1,5 +1,9 @@
 <?php
-$roomList = file_get_contents("./room-list.json");
+
+include('../functions.php');
+
+$roomList = getRooms();
 
 http_response_code(200);
-echo $roomList;
+$json = json_encode($roomList);
+echo $json;
