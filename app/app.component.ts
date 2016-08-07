@@ -7,6 +7,7 @@ import {RegisterPageComponent} from "./pages/register-page.component";
 import {LoginPageComponent} from "./pages/login-page.component";
 import {SearchPageComponent} from "./pages/search-page.component";
 import {NewHotelPageComponent} from "./pages/new-hotel-page.component";
+import {UserService} from "./services/user.service";
 
 
 @Component({
@@ -16,7 +17,7 @@ import {NewHotelPageComponent} from "./pages/new-hotel-page.component";
         
         <router-outlet></router-outlet>
     `,
-    providers: [HTTP_PROVIDERS],
+    providers: [HTTP_PROVIDERS, UserService],
     directives: [NavigationComponent, HomePageComponent, ROUTER_DIRECTIVES]
 })
 @RouteConfig([

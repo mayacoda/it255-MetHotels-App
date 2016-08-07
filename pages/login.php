@@ -18,8 +18,9 @@ if ($data->login) {
     $password = $data->password;
 
     if (!empty($email) && !empty($password)) {
-        if (loginUser( $email, $password )) {
+        if ($token = loginUser( $email, $password )) {
             $_SESSION['email'] = $email;
+            echo json_encode(['token'=> $token]);
             http_response_code(200);
         } else {
             http_response_code(401);

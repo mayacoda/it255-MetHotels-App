@@ -16,7 +16,8 @@ $guestQuery = "CREATE TABLE IF NOT EXISTS `guests` (
 `firstname` VARCHAR(150) NOT NULL, 
 `lastname` VARCHAR(150) NOT NULL, 
 `email` VARCHAR(150) NOT NULL, 
-`password` VARCHAR(256) NOT NULL
+`password` VARCHAR(256) NOT NULL,
+`token` varchar(128) NOT NULL
 )
 COLLATE='utf8_unicode_ci' 
 ENGINE=InnoDB";

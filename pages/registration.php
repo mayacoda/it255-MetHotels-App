@@ -17,8 +17,9 @@ if ($data->register) {
     $password  = $data->password;
 
     if (!empty($firstName) && !empty($lastName) && !empty($email) && !empty($password)) {
-        if (register( $firstName, $lastName, $email, $password )) {
+        if ($token = register( $firstName, $lastName, $email, $password )) {
             http_response_code(200);
+            echo json_encode(["token" => $token]);
         } else {
             http_response_code(409);
         }

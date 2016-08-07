@@ -2,8 +2,12 @@
 
 include('../functions.php');
 
-$roomList = getRooms();
+if (isLoggedIn()) {
+    http_response_code(200);
 
-http_response_code(200);
-$json = json_encode($roomList);
-echo $json;
+    $roomList = getRooms();
+    $json = json_encode($roomList);
+    echo $json;
+} else {
+    http_response_code(403);
+}

@@ -2,6 +2,7 @@ import {Component} from "angular2/core";
 import {Http, Headers} from "angular2/http";
 import {Router} from "angular2/router";
 import {ControlGroup, Control, FORM_DIRECTIVES, Validators} from "angular2/common";
+import {UserService} from "../services/user.service";
 
 @Component({
     selector: 'register-page',
@@ -14,7 +15,7 @@ export class RegisterPageComponent {
     userExists:boolean;
     registrationSuccess:boolean;
 
-    constructor(private http:Http, private router:Router) {
+    constructor(private http:Http, private router:Router, private userService: UserService) {
         this.registerForm = new ControlGroup({
             firstName: new Control('', Validators.required),
             lastName: new Control('', Validators.required),
@@ -36,10 +37,11 @@ export class RegisterPageComponent {
             JSON.stringify(value),
             {headers: headers}
         ).subscribe(res => {
+            this.userService.setTokenAndUser(res.json().token, {email: form.value.email});
             this.registrationSuccess = true;
             setTimeout(() => {
-                this.router.navigate(['/Login']);
-            }, 4000);
+                this.router.navigate(['/Home']);
+            }, 2000);
         }, err => {
             if (err.status === 409) {
                 this.userExists = true;

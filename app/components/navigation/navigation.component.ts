@@ -1,5 +1,8 @@
 import {Component, OnInit} from "angular2/core";
 import {ROUTER_DIRECTIVES, Router} from "angular2/router";
+import {UserService} from "../../services/user.service";
+import {Observable} from "rxjs/Rx";
+import {User} from "../../models/user.model";
 
 @Component({
     selector: 'navigation',
@@ -9,8 +12,10 @@ import {ROUTER_DIRECTIVES, Router} from "angular2/router";
 export class NavigationComponent implements OnInit {
     query: string;
     showSearch: boolean = true;
+    currentUser: Observable<User>;
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private userService: UserService) {
+        this.currentUser = userService.getUser();
     }
 
     onSearch(query: string) {
@@ -22,5 +27,9 @@ export class NavigationComponent implements OnInit {
             // do not show navigation search on search page
             this.showSearch = page.search(/search/) === -1;
         })
+    }
+
+    logOut(): void {
+        this.userService.removeToken();
     }
 }

@@ -2,6 +2,7 @@ import {Component} from "angular2/core";
 import {Http, Headers} from "angular2/http";
 import {Router} from "angular2/router";
 import {ControlGroup, FORM_DIRECTIVES, Control, Validators} from "angular2/common";
+import {UserService} from "../services/user.service";
 
 @Component({
     selector: 'login-page',
@@ -14,7 +15,7 @@ export class LoginPageComponent {
     loginSuccess: boolean;
     invalidLogin: boolean;
 
-    constructor(private http: Http, private router: Router) {
+    constructor(private http: Http, private router: Router, private userService: UserService) {
         this.loginForm = new ControlGroup({
             email: new Control('', Validators.required),
             password: new Control('', Validators.required)
@@ -35,9 +36,10 @@ export class LoginPageComponent {
             {headers: headers}
         ).subscribe(res => {
             this.loginSuccess = true;
+            this.userService.setTokenAndUser(res.json().token, {email: form.value.email});
             setTimeout(() => {
                 this.router.navigate(['/Home']);
-            }, 4000);
+            }, 2000);
         }, err => {
             if (err.status === 401) {
                 this.invalidCredentials = true;

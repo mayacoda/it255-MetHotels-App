@@ -1,9 +1,9 @@
-import {Component, OnInit, Pipe, PipeTransform} from "angular2/core";
-import {Http} from "angular2/http";
+import {Component, OnInit} from "angular2/core";
+import {Http, Headers} from "angular2/http";
 import {Observable} from "rxjs/Rx";
 import {Room} from "../models/hotel.model";
 import {RouteParams} from "angular2/router";
-import 'rxjs/Rx';
+import "rxjs/Rx";
 import {RoomSearchPipe} from "../pipes/search.pipe";
 
 
@@ -21,6 +21,10 @@ import {RoomSearchPipe} from "../pipes/search.pipe";
             results based on room type. Numerical searches return rooms with that number of people or more, or that 
             amount of area or more.
             </p>
+            
+            <div class="alert alert-danger" *ngIf="isForbidden">
+                Only users who are logged in can access the search.
+            </div>
         </form>
     </div>
     <div class="panel" *ngFor="#room of roomList | async | roomSearch:query ">
@@ -38,15 +42,27 @@ import {RoomSearchPipe} from "../pipes/search.pipe";
 export class SearchPageComponent implements OnInit {
     roomList:Observable<Room[]>;
     query:string;
+    isForbidden:boolean;
 
     constructor(private http:Http, private routeParams:RouteParams) {
     }
 
     ngOnInit() {
         this.query = this.routeParams.get('query');
+        const headers = new Headers();
+        const token = localStorage.getItem('token');
 
-        this.roomList = this.http.get('http://it255.dev:8006/Hotels/pages/room-list.php')
-            .map(res => res.json());
+        headers.append('token', token);
+        this.http.get('http://it255.dev:8006/Hotels/pages/room-list.php',
+            {headers: headers})
+            .map(res => res.json())
+            .subscribe(res => {
+                this.roomList = Observable.of(res);
+            }, err => {
+                if (err.status === 403) {
+                    this.isForbidden = true;
+                }
+            });
     }
 
 }

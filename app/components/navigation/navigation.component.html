@@ -12,9 +12,10 @@
 
         <div class="navbar-collapse collapse" id="navbar_collapse">
 
-            <a [routerLink]="['/Login']" class="btn btn-default navbar-btn">Sign in</a>
-            <a [routerLink]="['/Register']" class="btn btn-primary navbar-btn">Register</a>
-            <a [routerLink]="['/New']" class="btn btn-primary navbar-btn">New</a>
+            <a [routerLink]="['/Login']" class="btn btn-default navbar-btn" *ngIf="!(currentUser | async)">Sign in</a>
+            <a [routerLink]="['/Register']" class="btn btn-primary navbar-btn" *ngIf="!(currentUser | async)">Register</a>
+            <a [routerLink]="['/New']" class="btn btn-primary navbar-btn" *ngIf="(currentUser | async)">New</a>
+            <button (click)="logOut()" class="btn btn-primary navbar-btn" *ngIf="(currentUser | async)">Logout</button>
 
             <form class="navbar-form navbar-right hidden-xs"
                   *ngIf="showSearch"

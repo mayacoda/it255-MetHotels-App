@@ -1,6 +1,22 @@
 <?php
 include("config.php");
 
+function isLoggedIn() {
+    global $connection;
+    if (isset($_SERVER['HTTP_TOKEN']) && !empty($_SERVER['HTTP_TOKEN'])) {
+        $token = $_SERVER['HTTP_TOKEN'];
+        $query = $connection->prepare( "SELECT * FROM guests WHERE token=?" );
+        $query->bind_param('s', $token);
+
+        $query->execute();
+        $query->store_result();
+
+        return $query->num_rows > 0;
+    }
+
+    return false;
+}
+
 function register($firstName, $lastName, $email, $password) {
     global $connection;
 
@@ -13,7 +29,13 @@ function register($firstName, $lastName, $email, $password) {
         $query->execute();
         $query->close();
 
-        return true;
+        $id         = sha1( uniqid() );
+        $tokenQuery = $connection->prepare( "UPDATE guests SET token=? WHERE email=?" );
+        $tokenQuery->bind_param( 'ss', $id, $email );
+        $tokenQuery->execute();
+        $tokenQuery->store_result();
+
+        return $id;
     } else {
         return false;
     }
@@ -39,7 +61,17 @@ function loginUser($email, $password) {
     $query->execute();
     $query->store_result();
 
-    return $query->num_rows > 0;
+    if ($query->num_rows > 0) {
+        $id         = sha1( uniqid() );
+        $tokenQuery = $connection->prepare( "UPDATE guests SET token=? WHERE email=?" );
+        $tokenQuery->bind_param( 'ss', $id, $email );
+        $tokenQuery->execute();
+        $tokenQuery->store_result();
+
+        return $id;
+    }
+
+    return false;
 }
 
 function createHotel($location, $name, $image) {
