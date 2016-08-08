@@ -3,6 +3,7 @@ import {HotelInfoComponent} from "./hotel-info.component";
 import {Hotel} from "../../models/hotel.model";
 import {FORM_DIRECTIVES, ControlGroup, Control, Validators}    from 'angular2/common';
 import {Http} from "angular2/http";
+import {BehaviorSubject} from "rxjs/Rx";
 
 @Component({
     selector: 'hotel-picker',
@@ -11,12 +12,12 @@ import {Http} from "angular2/http";
 })
 export class HotelPickerComponent {
     hotels: Hotel[];
-    selectedHotel:Hotel;
+    selectedHotel:BehaviorSubject<Hotel>;
     hotelForm:ControlGroup;
     model:any = {};
 
     onHotelSelected(id: number) {
-        this.selectedHotel = this.hotels.filter(hotel => hotel.id === id)[0];
+        this.selectedHotel.next(this.hotels.filter(hotel => hotel.id === id)[0]);
     }
 
     constructor(private http: Http) {
@@ -29,6 +30,8 @@ export class HotelPickerComponent {
             people: new Control('', Validators.required)
         });
 
+        this.selectedHotel = new BehaviorSubject<Hotel>(null);
+
         http.get("http://it255.dev:8006/Hotels/pages/hotel-list-rooms.php")
             .map(res => res.json())
             .subscribe(res => {
@@ -36,7 +39,7 @@ export class HotelPickerComponent {
 
                 (<Control>this.hotelForm.controls["hotel"]).updateValue(this.hotels[0].id);
                 this.model.hotel = this.hotels[0].id;
-                this.selectedHotel = this.hotels[0];
+                this.selectedHotel.next(this.hotels[0]);
             });
 
 

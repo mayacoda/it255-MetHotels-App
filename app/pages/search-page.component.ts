@@ -5,6 +5,7 @@ import {Room} from "../models/hotel.model";
 import {RouteParams} from "angular2/router";
 import "rxjs/Rx";
 import {RoomSearchPipe} from "../pipes/search.pipe";
+import {Control} from "angular2/common";
 
 
 @Component({
@@ -12,9 +13,44 @@ import {RoomSearchPipe} from "../pipes/search.pipe";
     template: `
 <div class="container">
     <div class="panel row">
-        <form class="panel-body col-md-4" #search="ngForm">
-            <label class="control-label">Search:
-                    <input type="text" class="form-control" [(ngModel)]="query">
+        <div class="panel-body">
+            <p class="help-block">
+                The search below is synchronized with the table. Changing the query will change the search inside the table and load new results.
+            </p>
+            <table class="display data-table">
+                <thead>
+                    <tr>
+                    <th>
+                        Type:
+                    </th>
+                    <th>
+                        Number of People:
+                    </th>
+                    <th>
+                        Area:
+                    </th>
+                    <th>
+                        Price:
+                    </th>
+                    </tr>
+                </thead>
+    
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+	    
+	</div>
+
+    <div class="panel row">
+        <form class="panel-body" #search="ngForm">
+            <label class="control-label col-md-4">Search:
+                    <input 
+                     type="text"
+                     class="form-control" 
+                     name="queryForm"
+                     [ngFormControl]="queryForm"
+                     [(ngModel)]="query">
             </label>
             <p class="help-block">
             Search starting with a $ will return rooms that are at or below that price level. Textual searches return 
@@ -41,8 +77,11 @@ import {RoomSearchPipe} from "../pipes/search.pipe";
 })
 export class SearchPageComponent implements OnInit {
     roomList:Observable<Room[]>;
+    rooms: Room[];
     query:string;
+    queryForm: Control = new Control();
     isForbidden:boolean;
+    table: any;
 
     constructor(private http:Http, private routeParams:RouteParams) {
     }
@@ -58,8 +97,25 @@ export class SearchPageComponent implements OnInit {
             .map(res => res.json())
             .subscribe(res => {
                 this.roomList = Observable.of(res);
+                this.rooms = res;
+                //noinspection TypeScriptUnresolvedFunction
+                this.table = $('.data-table').DataTable({
+                    data: res, // Data Table must load data to be shown, can't load it directly from DOM
+                    columns: [
+                        {data: 'type'},
+                        {data: 'area'},
+                        {data: 'price'},
+                        {data: 'people'}
+                    ]
+                });
+
+                this.table.search(this.query).draw();
+
+                this.queryForm.valueChanges.subscribe(query => {
+                    this.table.search(query).draw();
+                });
             }, err => {
-                if (err.status === 403) {
+                if (err.status === 401) {
                     this.isForbidden = true;
                 }
             });

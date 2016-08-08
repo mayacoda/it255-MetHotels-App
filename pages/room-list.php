@@ -9,5 +9,5 @@ if (isLoggedIn()) {
     $json = json_encode($roomList);
     echo $json;
 } else {
-    http_response_code(403);
+    http_response_code(401);
 }

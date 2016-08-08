@@ -1,22 +1,26 @@
 <div class="hotel-images" *ngIf="hotel">
-    <div class="image" [style.background-image]="'url(' + hotel.image + ')'"></div>
+    <div class="image" [style.background-image]="'url(' + hotelValue.image + ')'"></div>
 
-    <p><em>Location:</em> {{hotel.location}}</p>
+    <p><em>Location:</em> {{hotelValue.location }}</p>
 
-    <table class="table">
+    <table class="display data-table">
         <thead>
         <tr>
-            <th>Room type</th>
-            <th>Price</th>
-            <th>People</th>
+            <th>
+                Type:
+            </th>
+            <th>
+                Number of People:
+            </th>
+            <th>
+                Area:
+            </th>
+            <th>
+                Price:
+            </th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="#room of hotel.rooms">
-            <td>{{room.type}}</td>
-            <td>{{room.price}}</td>
-            <td>{{room.people}}</td>
-        </tr>
         </tbody>
     </table>
 </div>

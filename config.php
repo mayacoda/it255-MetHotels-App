@@ -1,5 +1,11 @@
 <?php
 
+header( "Access-Control-Allow-Origin: *" );
+header( 'Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization, Token, token, TOKEN' );
+if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") {
+    exit();
+}
+
 $host     = "localhost";
 $userName = "root";
 $password = "notroot";
@@ -17,7 +23,7 @@ $guestQuery = "CREATE TABLE IF NOT EXISTS `guests` (
 `lastname` VARCHAR(150) NOT NULL, 
 `email` VARCHAR(150) NOT NULL, 
 `password` VARCHAR(256) NOT NULL,
-`token` varchar(128) NOT NULL
+`token` VARCHAR(128) NOT NULL
 )
 COLLATE='utf8_unicode_ci' 
 ENGINE=InnoDB";
