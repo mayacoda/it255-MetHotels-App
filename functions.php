@@ -104,6 +104,24 @@ function createRoom($hotelId, $type, $area, $people, $price) {
     return $id;
 }
 
+function updateRoom($id, $type, $people, $hotelId, $price) {
+    global $connection;
+
+    $query = $connection->prepare("UPDATE rooms SET type=?, people=?, hotelId=?, price=? WHERE id=?");
+    $query->bind_param('siiii', $type, $people, $hotelId, $price, $id);
+
+    return $query->execute();
+}
+
+function deleteRoom($id) {
+    global $connection;
+
+    $query = $connection->prepare("DELETE FROM rooms WHERE id=?");
+    $query->bind_param('i', $id);
+
+    return $query->execute();
+}
+
 function getHotels() {
     global $connection;
 
@@ -164,4 +182,17 @@ function getRooms() {
     }
 
     return $results;
+}
+
+function getRoomById($id) {
+    global $connection;
+
+    $sql      = "SELECT * FROM rooms where id={$id}";
+    $response = $connection->query($sql);
+
+    if ($response->num_rows > 0) {
+        return $response->fetch_object();
+    } else {
+        return false;
+    }
 }

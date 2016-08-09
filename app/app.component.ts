@@ -8,6 +8,7 @@ import {LoginPageComponent} from "./pages/login-page.component";
 import {SearchPageComponent} from "./pages/search-page.component";
 import {NewHotelPageComponent} from "./pages/new-hotel-page.component";
 import {UserService} from "./services/user.service";
+import {EditRoomPageComponent} from "./pages/edit-room-page.component";
 
 
 @Component({
@@ -25,7 +26,8 @@ import {UserService} from "./services/user.service";
     {path: '/register', name: 'Register', component: RegisterPageComponent},
     {path: '/login', name: 'Login', component: LoginPageComponent},
     {path: '/search', name: 'Search', component: SearchPageComponent},
-    {path: '/new', name: 'New', component: NewHotelPageComponent}
+    {path: '/new', name: 'New', component: NewHotelPageComponent},
+    {path: '/edit/:id', name: 'Edit', component: EditRoomPageComponent}
 ])
 export class AppComponent {
     constructor() {

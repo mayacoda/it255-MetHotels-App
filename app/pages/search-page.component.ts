@@ -2,7 +2,7 @@ import {Component, OnInit} from "angular2/core";
 import {Http, Headers} from "angular2/http";
 import {Observable} from "rxjs/Rx";
 import {Room} from "../models/hotel.model";
-import {RouteParams} from "angular2/router";
+import {RouteParams, ROUTER_DIRECTIVES} from "angular2/router";
 import "rxjs/Rx";
 import {RoomSearchPipe} from "../pipes/search.pipe";
 import {Control} from "angular2/common";
@@ -10,6 +10,7 @@ import {Control} from "angular2/common";
 
 @Component({
     selector: 'search-page',
+    directives: [ROUTER_DIRECTIVES],
     template: `
 <div class="container">
     <div class="panel row">
@@ -64,6 +65,9 @@ import {Control} from "angular2/common";
         </form>
     </div>
     <div class="panel" *ngFor="#room of roomList | async | roomSearch:query ">
+        <div class="panel-heading">
+            <a [routerLink]="['/Edit', {id: room.id}]">Edit this room</a>
+        </div>
         <div class="panel-body">
             <p><strong>Type:</strong> {{ room.type }}</p>
             <p><strong>Area:</strong> {{ room.area }}m2</p>
